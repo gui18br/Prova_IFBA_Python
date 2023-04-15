@@ -52,7 +52,7 @@ id = 0
 
 def adicionarCtt():
     """
-    Função que adiciona um contato à lista 'lista_ctt'.
+    Função que adiciona um contato à lista 'lista_ctt' conforme o id passado.
 
     Essa função lê os valores de entrada para nome, telefone e email, 
     cria um novo objeto 'Contato' com um id incrementado, adiciona-o à lista 'lista_ctt' e 
@@ -77,7 +77,7 @@ def adicionarCtt():
 
 def deletarCtt():
     """
-    Função que deleta um contato da lista 'lista_ctt'.
+    Função que deleta um contato da lista 'lista_ctt' conforme o id passado.
 
     Essa função lê o id de um contato e com base no mesmo deleta pelo index
     na lista ao qual ele pertence 'lista_ctt'.
@@ -96,7 +96,7 @@ def deletarCtt():
 
 def atualizarCtt():
     """
-    Função que atualiza um contato da lista 'lista_ctt'.
+    Função que atualiza um contato da lista 'lista_ctt' conforme o id passado.
 
     Essa função percorre a 'lista_ctt' pelos contatos e faz alterações conforme a vontade do usuário
     pelo id lido e comparado na condição if.
@@ -116,6 +116,25 @@ def atualizarCtt():
     texto_contato.insert(tk.END, "\n".join(str(contato)
                          for contato in lista_ctt))
     texto_contato.config(state='disabled')
+
+
+def pesquisarCtt():
+    """
+    Função que pesquisa um contato da lista 'lista_ctt' conforme o id passado.
+
+    Essa função percorre a 'lista_ctt' pelos contatos e faz alterações conforme a vontade do usuário
+    pelo id lido e comparado na condição if.
+
+    Retorno: None.
+
+    """
+    id = entrada_id.get()
+    for contato in lista_ctt:
+        if str(contato.id) == id:
+            texto_contato.config(state='normal')
+            texto_contato.delete(1.0, tk.END)
+            texto_contato.insert(tk.END, contato)
+            texto_contato.config(state='disabled')
 
 
 janela = tk.Tk()
@@ -142,7 +161,7 @@ entrada_email.pack()
 botao_adicionarCtt = tk.Button(janela, text='Adicionar', command=adicionarCtt)
 botao_adicionarCtt.pack()
 
-rotulo_id = tk.Label(janela, text='Remover/Atualizar pelo ID: ')
+rotulo_id = tk.Label(janela, text='ID: ')
 rotulo_id.pack(side=tk.LEFT)
 
 entrada_id = tk.Entry(janela)
@@ -153,6 +172,9 @@ botao_deletarCtt.pack(side=tk.LEFT)
 
 botao_atualizarCtt = tk.Button(janela, text='Atualizar', command=atualizarCtt)
 botao_atualizarCtt.pack(side=tk.LEFT)
+
+botao_pesquisarCtt = tk.Button(janela, text='Pesquisar', command=pesquisarCtt)
+botao_pesquisarCtt.pack(side=tk.LEFT)
 
 texto_contato = tk.Text(janela, height=5, state='disabled')
 texto_contato.pack()
